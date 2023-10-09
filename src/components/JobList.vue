@@ -22,7 +22,7 @@ const orderedJobs: ComputedRef<Job[]> = computed(() =>
 
 <template>
   <div class="jobs">
-    <ul class="jobs__list">
+    <transition-group class="jobs__list" name="list" tag="ul">
       <li v-for="job in orderedJobs" :key="job.id" class="jobs__item job">
         <h2 class="job__title">{{ job.title }} in {{ job.location }}</h2>
         <div class="job__salary">
@@ -34,7 +34,7 @@ const orderedJobs: ComputedRef<Job[]> = computed(() =>
             Distinctio, velit!</p>
         </div>
       </li>
-    </ul>
+    </transition-group>
   </div>
 </template>
 
@@ -79,5 +79,9 @@ const orderedJobs: ComputedRef<Job[]> = computed(() =>
 
   &__description {
   }
+}
+
+.list-move {
+  transition: all 500ms;
 }
 </style>
