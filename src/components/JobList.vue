@@ -1,19 +1,29 @@
 <script setup lang="ts">
-import type {Job} from "@/types"
-import type {PropType} from "vue"
+import type {Job, OrderTerm} from "@/types"
+import type {ComputedRef, PropType} from "vue"
+import {computed} from "vue"
 
 const props = defineProps({
   jobs: {
     required: true,
     type: Array as PropType<Job[]>,
   },
+  order: {
+    required: true,
+    type: String as PropType<OrderTerm>
+  },
 })
+
+const orderedJobs: ComputedRef<Job[]> = computed(() =>
+    [...props.jobs]
+        .sort((a: Job, b: Job) => a[props.order] > b[props.order] ? 1 : -1)
+)
 </script>
 
 <template>
   <div class="jobs">
     <ul class="jobs__list">
-      <li v-for="job in jobs" :key="job.id" class="jobs__item job">
+      <li v-for="job in orderedJobs" :key="job.id" class="jobs__item job">
         <h2 class="job__title">{{ job.title }} in {{ job.location }}</h2>
         <div class="job__salary">
           <p>{{ job.salary }} euros per year</p>

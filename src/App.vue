@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type {Job} from "@/types"
+import type {Job, OrderTerm} from "@/types"
 import {ref} from "vue"
 import JobList from "@/components/JobList.vue"
 
@@ -35,14 +35,44 @@ const jobs = ref<Job[]>([
     salary: 10000,
   },
 ])
+
+const order = ref<OrderTerm>('title')
+
+const handleClick = (term: OrderTerm) => {
+  (order.value !== term) && (order.value = term)
+}
 </script>
 
 <template>
-<div class="app">
-  <JobList :jobs="jobs" />
-</div>
+  <div class="app">
+    <header class="order">
+      <div class="order__wrap">
+        <button class="order__btn" @click="handleClick('title')">order by title</button>
+        <button class="order__btn" @click="handleClick('salary')">order by salary</button>
+        <button class="order__btn" @click="handleClick('location')">order by location</button>
+      </div>
+    </header>
+    <JobList :jobs="jobs" :order="order"/>
+  </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+.order {
+  text-align: center;
 
+  &__wrap {
+    margin-top: 20px;
+  }
+
+  &__btn {
+    margin: 0 10px;
+    color: #1195c9;
+    border: 3px solid #1195c9;
+    background: #d5f0ff;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+}
 </style>

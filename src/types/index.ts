@@ -4,3 +4,5 @@ export type Job = {
     location: string,
     salary: number
 }
+
+export type OrderTerm = 'title'|'salary'|'location'
